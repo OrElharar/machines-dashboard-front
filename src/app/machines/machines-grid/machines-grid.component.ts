@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GridDataResult, PageChangeEvent} from '@progress/kendo-angular-grid';
+import {PageChangeEvent} from '@progress/kendo-angular-grid';
 import {IMachine} from "../../_models/machine";
 import {MachinesService} from "../../_services/machines.service";
 import {UserParams} from "../../_models/userParams";
