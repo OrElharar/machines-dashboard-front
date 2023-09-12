@@ -17,7 +17,6 @@ import {IConfirmDialogData} from "../../_models/confirm-dialog-data";
 })
 export class MachinesGridComponent implements OnInit {
   @Input() machines: IMachine[] | undefined;
-  // public gridDataResult: GridDataResult = {data: [], total: 0};
   public kendoGridBinding: any[] = [];
   public user: IUser | undefined;
   public userParams: UserParams | undefined;
@@ -35,17 +34,13 @@ export class MachinesGridComponent implements OnInit {
   private loadGridDataResult(): void {
     if(this.userParams == null || this.machines == null)
       return;
-
-    const startIndex = this.userParams.skip;
-    const endIndex = this.userParams.skip + this.userParams.pageSize;
-    const dataForCurrentPage = this.machines.slice(startIndex, endIndex);
     this.kendoGridBinding = this.machines;
   }
 
   public refresh(): void {
     if(this.userParams == null)
       return;
-    this.machineService.getMachines(this.userParams).subscribe({
+    this.machineService.getMachinesFullData(this.userParams).subscribe({
       next: response => {
         if(response == null)
           return;
