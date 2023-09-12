@@ -1,0 +1,56 @@
+<form *ngIf="registerForm"
+      [formGroup]="registerForm"
+      (ngSubmit)="registerForm.valid && register()"
+      autocomplete="off">
+  <h2 class="text-center text-primary">Sign up</h2>
+  <hr/>
+  <div class="mb-3">
+    <label style="margin-right: 10px">Gender: </label>
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input ms-2" value="''" formControlName="gender"> I Prefer not to say
+    </label>
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input ms-2" value="male" formControlName="gender"> Male
+    </label>
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input ms-2" value="female" formControlName="gender"> Female
+    </label>
+  </div>
+  <app-text-input [formControl]="$any(registerForm.controls['username'])"
+                  [label]="'Username'"
+                  [placeholder]="'Your username'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['knownAs'])"
+                  [label]="'Known As'"
+                  [placeholder]="'Your known as'"></app-text-input>
+  <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])"
+                  [label]="'Date of Birth'"
+                  [maxDate]="maxDate"></app-date-picker>
+  <app-text-input [formControl]="$any(registerForm.controls['city'])"
+                  [label]="'City'"
+                  [placeholder]="'Your city'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['country'])"
+                  [label]="'Country'"
+                  [placeholder]="'Your country'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['password'])"
+                  [label]="'Password'"
+                  [placeholder]="'Your password'"
+                  [type]="'password'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])"
+                  [label]="'Confirm Password'"
+                  [placeholder]="'Confirm your password'"
+                  [type]="'password'"></app-text-input>
+
+  <div class="row" *ngIf="validationErrors.length > 0">
+    <div class="col">
+      <ul class="text-danger">
+        <li *ngFor="let error of validationErrors">{{error}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button [disabled]="!registerForm.valid"  class="btn btn-success me-2" type="submit">Register</button>
+    <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

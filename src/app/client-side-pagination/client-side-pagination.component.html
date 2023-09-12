@@ -1,0 +1,25 @@
+<ul class="pagination" *ngIf="userParams && pages.length > 1">
+  <li class="page-item" [class.disabled]="userParams.pageNumber === 1">
+    <a class="page-link" (click)="onClickedPage(1)" aria-label="First">
+      <span aria-hidden="true">&laquo;&laquo;</span>
+    </a>
+  </li>
+  <li class="page-item" [class.disabled]="userParams.pageNumber === 1">
+    <a class="page-link" (click)="onClickedPage(userParams.pageNumber - 1)" aria-label="Previous">
+      <span aria-hidden="true">&laquo;</span>
+    </a>
+  </li>
+  <li class="page-item" *ngFor="let pageNumber of getVisiblePageRange()" [class.active]="pageNumber === userParams.pageNumber">
+    <a class="page-link" (click)="onClickedPage(pageNumber)">{{ pageNumber }}</a>
+  </li>
+  <li class="page-item" [class.disabled]="userParams.pageNumber === getTotalPages()">
+    <a class="page-link" (click)="onClickedPage(userParams.pageNumber + 1)" aria-label="Next">
+      <span aria-hidden="true">&raquo;</span>
+    </a>
+  </li>
+  <li class="page-item" [class.disabled]="userParams.pageNumber === getTotalPages()">
+    <a class="page-link" (click)="onClickedPage(getTotalPages())" aria-label="Last">
+      <span aria-hidden="true">&raquo;&raquo;</span>
+    </a>
+  </li>
+</ul>

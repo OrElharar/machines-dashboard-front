@@ -1,0 +1,35 @@
+
+<ng-container *ngIf="machines && userParams">
+  <span>
+    <input
+      type="text"
+      style="padding:8px;margin:15px auto;width:30%; margin-right: 10px;"
+      placeholder="Filter by machine name..."
+      (keyup)="updateFilter($event)"
+    />
+    <kendo-dropdownbutton
+      [data]="pageSizeOptions" (itemClick)="pageSizeChange($event)">
+      Page Size
+    </kendo-dropdownbutton>
+    <kendo-button class="k-button k-primary" (click)="onClickRefresh()">Refresh</kendo-button>
+  </span>
+
+  <div>
+    <div class="card-container">
+      <app-machine-card *ngFor="let machine of machines"
+                        [machine]="machine"
+                        [buttonText]="'Edit'"
+                        [buttonDisabled]="false"
+                        (buttonClicked)="editItemClicked(machine)"
+                        class="small-card">
+      </app-machine-card>
+    </div>
+    <app-client-side-pagination
+      [totalItems]="totalItems"
+      [userParams]="userParams"
+      (pageClicked)="goToPage($event)">
+    </app-client-side-pagination>
+  </div>
+</ng-container>
+
+

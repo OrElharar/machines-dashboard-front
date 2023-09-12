@@ -1,0 +1,57 @@
+<ng-container *ngIf="userParams">
+  <div>
+  </div>
+  <kendo-grid
+    [kendoGridBinding]="kendoGridBinding"
+    [pageSize]="userParams.pageSize"
+    [skip]="userParams.skip"
+    [pageable]="true"
+    [filterable]="true"
+    [sortable]="true"
+    [reorderable]="true"
+    [resizable]="true"
+    (pageChange)="pageChange($event)"
+    class="k-theme-default" >
+
+      <ng-template kendoGridToolbarTemplate>
+        <kendo-dropdownbutton
+          [data]="pageSizesOptions" (itemClick)="pageSizeChange($event)">
+          Page Size
+        </kendo-dropdownbutton>
+        <kendo-button class="k-button k-primary" (click)="onClickRefresh()">Refresh</kendo-button>
+      </ng-template>
+    <kendo-grid-column field="id" title="ID" [width]="215">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div style="display: flex; align-items: center;">
+          <button class="k-button k-primary" (click)="editItemClicked(dataItem)">Edit</button>
+          <button class="k-button ms-2" style="background-color: #ff0000; color: #ffffff; opacity: 0.7;" (click)="deleteItemClicked(dataItem)">Delete</button>
+          <img [src]="dataItem.imageUrl || '/assets/machine.png'" alt="Machine Image" class="machine-icon" style="margin-left: 10px;">
+          <span class="k-icon k-i-machine" style="margin-left: 10px;"></span>{{ dataItem.id }}
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="name"
+      title="Name"></kendo-grid-column>
+    <kendo-grid-column field="capacityInPercent" title="Capacity">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ dataItem.capacityInPercent | number:'1.0-0' }}%
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="manufacturerName" title="Manufacturer"  [filterable]="true"></kendo-grid-column>
+    <kendo-grid-column field="purchasedAt" title="Date and Time of Purchase">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ dataItem.purchasedAt | date:'yy/MM/dd HH:mm' }}
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="status" title="Status"  [filterable]="true">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span class="k-icon"
+              [style.color]="dataItem.status === '1' ? 'green' : 'red'"
+              [ngClass]="{ 'k-i-check': dataItem.status === '1', 'k-i-close': dataItem.status !== '1' }"></span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="yearOfManufacture" title="Year of Manufacture"></kendo-grid-column>
+  </kendo-grid>
+
+</ng-container>

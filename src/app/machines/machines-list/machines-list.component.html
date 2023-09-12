@@ -1,0 +1,26 @@
+<ng-container>
+  <div>
+    <label>
+      Add New Machine
+    </label>
+    <kendo-button class="k-button k-primary m-3" (click)="onClickAddMachine()">+</kendo-button>
+  </div>
+  <div>
+    <label>View Mode</label>
+  </div>
+  <tabset class="grid-tabset">
+    <tab heading="Grid">
+      <app-machines-grid
+        *ngIf="machines.length > 0"
+        [machines]="machines"
+      ></app-machines-grid>
+    </tab>
+    <tab heading="List">
+      <app-machines-table
+        *ngIf="machines.length > 0"
+        [machines]="machines"
+      ></app-machines-table>
+    </tab>
+  </tabset>
+
+</ng-container>

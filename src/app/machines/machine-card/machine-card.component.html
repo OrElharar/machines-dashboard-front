@@ -1,0 +1,52 @@
+<div class="card" *ngIf="machine">
+  <div class="card-header text-center">
+    <button class="btn btn-success col-6"
+            (click)="onClickButton()"
+            [disabled]="buttonDisabled">{{ buttonText }}</button>
+  </div>
+  <div class="card-body">
+    <div>
+      <strong>Manufacturer: </strong>
+      <p>{{ machine.manufacturerName }}</p>
+    </div>
+    <div>
+      <strong>Machine Name: </strong>
+      <p>{{ machine.name }}</p>
+    <div>
+      <strong>Status: </strong>
+      <div>
+       <label>Mode: </label>
+        <span class="k-icon ms-2"
+              [style.color]="machine.status === '1' ? 'green' : 'red'"
+              [ngClass]="{ 'k-i-check': machine.status === '1', 'k-i-close': machine.status !== '1' }"></span>
+      </div>
+    </div>
+    <div>
+      <strong>Capacity Percentage: </strong>
+      <p>{{ machine.capacityInPercent }}%</p>
+    </div>
+    <div>
+      <strong>Year of Manufacture: </strong>
+      <p>{{ machine.yearOfManufacture }}</p>
+    </div>
+      <div>
+      <strong>Purchased At: </strong>
+        <p>{{ machine.purchasedAt | date: 'yy/MM/dd HH:mm' }}</p>
+      </div>
+    <div>
+      <strong>Last Updated: </strong>
+      <p>{{ machine.updatedAt | date }}</p>
+    </div>
+    <div>
+      <strong>Created At: </strong>
+      <p>{{ machine.createdAt | date }}</p>
+    </div>
+  </div>
+  <div class="card-footer text-center">
+    <img class="card-img-top img-thumbnail"
+         style="height: 150px; width: 150px;"
+         [src]="machine.imageUrl || './assets/machine.png'"
+         [alt]="machine.name + '\'s photo'"/>
+  </div>
+</div>
+</div>

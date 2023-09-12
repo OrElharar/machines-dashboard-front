@@ -1,0 +1,61 @@
+<div class="row" *ngIf="machine">
+  <div class="col-4">
+    <h1>Machine Profile</h1>
+  </div>
+  <div class="col-8">
+    <div class="alert alert-info pb-0" *ngIf="machineForm.dirty">
+      <p><strong>Information:</strong> You have made changes. Any unsaved changes will be lost.</p>
+    </div>
+  </div>
+  <div class="col-4">
+    <app-machine-card
+      [machine]="machine"
+      [buttonText]="'Keep Current'"
+      [buttonDisabled]="!machineForm.dirty"
+      (buttonClicked)="resetForm()">
+    </app-machine-card>
+  </div>
+  <div class="col-8">
+    <tabset class="machine-tabset">
+      <tab heading="Machine Details">
+        <form id="editForm" [formGroup]="machineForm" (ngSubmit)="updateMachine()">
+          <h4 class="mt-2">Machine Name</h4>
+          <input class="form-control" type="text" formControlName="name"  />
+          <div class="error-message mt-1" *ngIf="machineForm.get('name')?.hasError('required') && machineForm.get('name')?.touched">
+            Machine Name is required.
+          </div>
+          <h4 class="mt-2">Capacity in Percent</h4>
+          <input class="form-control" type="number" formControlName="capacityInPercent" />
+          <div class="mt-1 error-message" *ngIf="machineForm.get('capacityInPercent')?.hasError('percentInvalid') && machineForm.get('capacityInPercent')?.touched">
+            Capacity in Percent should be between 0 and 100.
+          </div>
+          <app-date-time-picker
+            [value]="machineForm.get('purchasedAt')?.value"
+            [header]="'Purchased At'"
+            (valueChange)="onPurchasedAtChange($event)"
+          ></app-date-time-picker>
+
+          <h4 class="mt-2">Change Status</h4>
+          <kendo-dropdownbutton
+            [data]="machineStatusOptions"
+            textField="label"
+            (itemClick)="statusChange($event)"
+          >
+            {{ machineForm.get('status')?.value === '0' ? 'Inactive' : 'Active' }}
+          </kendo-dropdownbutton>
+
+          <button
+            class="btn btn-success col-12 mt-4"
+            type="submit"
+            [disabled]="!machineForm.dirty || !machineForm.valid"
+          >
+            Save changes
+          </button>
+        </form>
+      </tab>
+      <tab heading="Edit Image">
+        <app-photo-editor  [machine]="machine"></app-photo-editor>
+      </tab>
+    </tabset>
+  </div>
+</div>

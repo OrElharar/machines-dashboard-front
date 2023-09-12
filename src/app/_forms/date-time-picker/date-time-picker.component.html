@@ -1,0 +1,19 @@
+<h4 class="mt-2" *ngIf="header"> {{header}}</h4>
+<div class="visit-demo card-container" *ngIf="value">
+  <div class="k-card custom-card">
+    <div class="card-row">
+      <div class="card-column">
+        <div class="component-container">
+          <label text="Date and Time"></label>
+          <kendo-datetimepicker
+            [format]="format"
+            [(value)]="value"
+            [max]="maxDate"
+            (valueChange)="onValueChange($event)"
+            class="custom-datetimepicker"
+          ></kendo-datetimepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <div *ngIf="!isLoginModeEnabled && !(accountsService.currentUser$ | async)" style="text-align: center;">
+    <h1>Welcome to my demo</h1>
+    <p class="lead">
+      Come on in to view the machines' dashboard... all you need to do is login :)
+    </p>
+    <div class="text-center">
+      <button (click)="loginToggle()" class="btn btn-primary btn-lg me-2">Login</button>
+      <button class="btn btn-primary btn-lg bg-info disabled">Learn more</button>
+    </div>
+  </div>
+  <div *ngIf="isLoginModeEnabled" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <app-login
+          (closeLoginForm)="cancelRegistrationMode($event)"
+        ></app-login>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="accountsService.currentUser$ | async">
+    <h3> Welcome, {{ (accountsService.currentUser$ | async)?.fullName }}</h3>
+    <div>
+      <p>To enter the Machines Dashboard click here</p>
+      <button kendoButton class="btn btn-primary me-2" type="button" routerLink="/machines">Machines</button>
+    </div>
+  </div>
+</div>

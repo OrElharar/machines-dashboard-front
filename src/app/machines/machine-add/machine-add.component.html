@@ -1,0 +1,75 @@
+<div class="k-form">
+  <div>
+    <form id="editForm" [formGroup]="machineForm" (ngSubmit)="addMachine()">
+      <h4 class="mt-2">Machine Name</h4>
+      <input class="form-control" type="text" formControlName="name" />
+      <div class="error-message" *ngIf="machineForm.get('name')?.hasError('required') && machineForm.get('name')?.touched">
+        Machine Name is required.
+      </div>
+
+      <h4 class="mt-2">Capacity in Percent</h4>
+      <input class="form-control" type="number" formControlName="capacityInPercent" />
+      <div class="error-message" *ngIf="machineForm.get('capacityInPercent')?.hasError('required') && machineForm.get('capacityInPercent')?.touched">
+        Capacity in Percent is required.
+      </div>
+      <div class="error-message" *ngIf="machineForm.get('capacityInPercent')?.hasError('percentInvalid') && machineForm.get('capacityInPercent')?.touched">
+        Capacity in Percent should be between 0 and 100.
+      </div>
+
+      <h4 class="mt-2">Year Of Manufacture</h4>
+      <input class="form-control" type="number" formControlName="yearOfManufacture" />
+      <div class="error-message" *ngIf="machineForm.get('yearOfManufacture')?.hasError('required') && machineForm.get('yearOfManufacture')?.touched">
+        Year Of Manufacture is required.
+      </div>
+
+      <app-date-time-picker
+        [value]="machineForm.get('purchasedAt')?.value"
+        [header]="'Purchased At'"
+        (valueChange)="onPurchasedAtChange($event)"
+      ></app-date-time-picker>
+      <div class="error-message" *ngIf="machineForm.get('purchasedAt')?.hasError('required') && machineForm.get('purchasedAt')?.touched">
+        Purchased At is required.
+      </div>
+
+      <div class="dropdowns-container">
+       <div (click)="touchedFormProperty('manufacturerId')">
+         <label class="m-2">Manufacturer</label>
+         <kendo-dropdownbutton
+           [data]="manufacturers"
+           textField="name"
+           class="custom-dropdown-button"
+           (itemClick)="manufacturersChange($event)"
+         >
+           {{ getManufacturerName(machineForm.get('manufacturerId')?.value) }}
+         </kendo-dropdownbutton>
+         <div class="error-message" *ngIf="machineForm.get('manufacturerId')?.hasError('required') && machineForm.get('manufacturerId')?.touched">
+           Manufacturer is required.
+         </div>
+       </div>
+        <div (click)="touchedFormProperty('status')">
+          <label class="m-2">Status</label>
+          <kendo-dropdownbutton
+            [data]="machineStatusOptions"
+            textField="label"
+            class="custom-dropdown-button"
+            (itemClick)="statusChange($event)"
+          >
+            {{ getStatus() }}
+          </kendo-dropdownbutton>
+          <div class="error-message" *ngIf="machineForm.get('status')?.hasError('required') && machineForm.get('status')?.touched">
+            Status is required.
+          </div>
+        </div>
+      </div>
+
+
+      <button
+        class="btn btn-success col-12 mt-4"
+        type="submit"
+        [disabled]="!machineForm.dirty || !machineForm.valid"
+      >
+        Add Machine
+      </button>
+    </form>
+  </div>
+</div>
